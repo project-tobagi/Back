@@ -30,7 +30,7 @@ resource "docker_image" "mysql" {
 
 # MySQL 컨테이너 설정
 resource "docker_container" "mysql_container" {
-  image = docker_image.mysql.latest
+  image = docker_image.mysql.image_id
   name  = "my_mysql_container"
 
   # MySQL 환경 변수 설정
@@ -59,11 +59,25 @@ resource "aws_key_pair" "deployer" {
     public_key = file("~/.ssh/id_rsa.pub")
 }
 
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "main_vpc"
+  }
+}
+resource "aws_subnet" "main" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "ap-northeast-2a"
+  tags = {
+    Name = "main_subnet"
+  }
+}
   # AWS 보안 그룹 설정 (SSH, HTTP, HTTPS 허용)
 resource "aws_security_group" "web_sg" {
     name        = "allow_ssh_http_https"
     description = "Allow SSH, HTTP, and HTTPS inbound traffic"
-
+    vpc_id      = aws_vpc.main.id
     ingress {
       from_port   = 22
       to_port     = 22
@@ -93,21 +107,52 @@ resource "aws_security_group" "web_sg" {
     }
 }
 
+
 # 네트워크 인터페이스 생성
 resource "aws_network_interface" "eni" {
-  subnet_id   = "subnet-0123456789abcdef0"  # 서브넷 ID 수정 (사용하려는 서브넷 ID로 변경)
+  subnet_id   = aws_subnet.main.id  # 서브넷 ID 수정 (사용하려는 서브넷 ID로 변경)
   # private_ips = ["10.0.1.100"]  # 프라이빗 IP 수정 (자동 할당을 원하면 제거 가능)
   security_groups = [aws_security_group.web_sg.id]  # 보안 그룹 ID
 }
 
+# IAM 역할 생성
+resource "aws_iam_role" "ec2_role" {
+  name = "ec2_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+# IAM 인스턴스 프로필 생성
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2_profile"
+  role = aws_iam_role.ec2_role.name
+}
+# IAM 정책 첨부
+resource "aws_iam_role_policy_attachment" "ec2_role_policy" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
+
   # AWS EC2 인스턴스 설정
 resource "aws_instance" "web" {
-    ami           = "ami-0742b4e673072066f"  # 9. Windows Server 2019 AMI ID (todo)
+    ami           = "ami-0c2acfcb2ac4d02a0"  # 리눅스 (64비트(x86), uefi-preferred)
     instance_type = "t2.micro"  # 무료 티어
     key_name      = aws_key_pair.deployer.key_name  # 생성한 키 페어 사용
-
+    # IAM 역할 연결
+    iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
     # 보안 그룹 지정
     vpc_security_group_ids = [aws_security_group.web_sg.id]
+    subnet_id              = aws_subnet.main.id
 
     # EC2 인스턴스 시작 시 실행할 사용자 데이터 스크립트
     user_data = <<-EOF
@@ -115,13 +160,13 @@ resource "aws_instance" "web" {
               sudo apt-get update
               sudo apt-get install -y openjdk-11-jdk
               EOF
-  # 네트워크 인터페이스 연결
-    network_interface {
-      network_interface_id = aws_network_interface.eni.id  # ENI ID 연결 (생성한 ENI 리소스의 ID)
-      device_index         = 0  # 첫 번째 네트워크 인터페이스로 설정
-    }
+#  # 네트워크 인터페이스 연결
+#    network_interface {
+#      network_interface_id = aws_network_interface.eni.id  # ENI ID 연결 (생성한 ENI 리소스의 ID)
+#      device_index         = 0  # 첫 번째 네트워크 인터페이스로 설정
+#    }
     tags = {
-      Name = "TobagiApp" #todo
+      Name = "TobagiApp"
     }
 }
 
