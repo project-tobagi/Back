@@ -42,3 +42,4 @@ out/
 *.tfstate
 *.tfstate.*
 *.tfplan
+terraform.tfvars

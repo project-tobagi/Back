@@ -22,7 +22,28 @@ provider "docker" {
 provider "aws" {
   region = "ap-northeast-2"
 }
+# MySQL 환경 변수 설정
+variable "mysql_root_password" {
+  description = "The root password for MySQL"
+  type        = string
+  sensitive   = true
+}
 
+variable "mysql_database" {
+  description = "The name of the MySQL database"
+  type        = string
+}
+
+variable "mysql_user" {
+  description = "The MySQL user"
+  type        = string
+}
+
+variable "mysql_password" {
+  description = "The password for the MySQL user"
+  type        = string
+  sensitive   = true
+}
 # MySQL Docker 이미지 설정
 resource "docker_image" "mysql" {
   name = "mysql:8.0"
@@ -35,10 +56,10 @@ resource "docker_container" "mysql_container" {
 
   # MySQL 환경 변수 설정
   env = [
-    "MYSQL_ROOT_PASSWORD=root_password",
-    "MYSQL_DATABASE=my_database",
-    "MYSQL_USER=my_user",
-    "MYSQL_PASSWORD=my_password",
+    "MYSQL_ROOT_PASSWORD=${var.mysql_root_password}",
+    "MYSQL_DATABASE=${var.mysql_database}",
+    "MYSQL_USER=${var.mysql_user}",
+    "MYSQL_PASSWORD=${var.mysql_password}",
   ]
 
   # 포트 매핑
