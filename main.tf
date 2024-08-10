@@ -53,7 +53,7 @@ resource "docker_container" "mysql_container" {
     container_path = "/docker-entrypoint-initdb.d/init.sql"
   }
 }
-# AWS SSH 키 페어 설정(todo)
+# AWS SSH 키 페어 설정
 resource "aws_key_pair" "deployer" {
     key_name   = "tobagi-deployer-key"
     public_key = file("~/.ssh/id_rsa.pub")
@@ -82,7 +82,7 @@ resource "aws_security_group" "web_sg" {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]  # SSH: 모든 IP 접근 허용 (todo)
+      cidr_blocks = ["0.0.0.0/0"]  # SSH: 모든 IP 접근 허용
     }
 
     ingress {
@@ -160,7 +160,7 @@ resource "aws_instance" "web" {
               sudo apt-get update
               sudo apt-get install -y openjdk-11-jdk
               EOF
-#  # 네트워크 인터페이스 연결
+#   네트워크 인터페이스 연결
 #    network_interface {
 #      network_interface_id = aws_network_interface.eni.id  # ENI ID 연결 (생성한 ENI 리소스의 ID)
 #      device_index         = 0  # 첫 번째 네트워크 인터페이스로 설정
@@ -176,7 +176,7 @@ output "eni_id" {
   value       = aws_network_interface.eni.id
 }
 
-  # 출력: EC2 인스턴스의 퍼블릭 IP
+# 출력: EC2 인스턴스의 퍼블릭 IP
 output "ec2_public_ip" {
     description = "Public IP of the EC2 instance"
     value       = aws_instance.web.public_ip
