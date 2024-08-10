@@ -12,4 +12,3 @@ CREATE TABLE test_table (
 
 -- 초기 데이터 삽입
 INSERT INTO test_table (name) VALUES ('Test Data 1'), ('Test Data 2'), ('Test Data 3');
-
