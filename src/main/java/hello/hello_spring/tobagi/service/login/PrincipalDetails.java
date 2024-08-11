@@ -1,4 +1,4 @@
-package hello.hello_spring.tobagi.service;
+package hello.hello_spring.tobagi.service.login;
 
 import hello.hello_spring.tobagi.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;

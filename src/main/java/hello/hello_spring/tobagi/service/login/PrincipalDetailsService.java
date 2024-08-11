@@ -1,7 +1,8 @@
-package hello.hello_spring.tobagi.service;
+package hello.hello_spring.tobagi.service.login;
 
 import hello.hello_spring.tobagi.entity.UserEntity;
 import hello.hello_spring.tobagi.repository.UserRepository;
+import hello.hello_spring.tobagi.service.login.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +18,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByLoginId(username)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다."));
         return new PrincipalDetails(userEntity);
     }
 }
