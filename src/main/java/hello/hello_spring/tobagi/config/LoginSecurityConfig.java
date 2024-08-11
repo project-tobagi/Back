@@ -12,19 +12,18 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
-public class AppConfig {
-
+public class LoginSecurityConfig {
     @Bean
-    //SecurityFilterChain: 보안 필터 체인을 정의하여 HTTP 요청에 대한 보안을 구성
+    //SecurityFilterChain: 보안 필터 체인을 정의 -> HTTP 요청에 대한 보안을 구성
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //authorizeHttpRequests: 요청 권한 설정을 정의합니다.
+                //authorizeHttpRequests: 요청 권한 설정 정의
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/", "/login**", "/webjars/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                //oauth2Login: OAuth2 로그인 설정을 정의합니다.
+                //oauth2Login: OAuth2 로그인 설정 정의
                 .oauth2Login(oauth2Login ->
                         oauth2Login
                                 .loginPage("/login")
@@ -40,7 +39,7 @@ public class AppConfig {
                                 .clearAuthentication(true) // 인증 정보 제거
                                 .permitAll()
                 )
-                //exceptionHandling: 예외 처리 설정을 정의합니다.
+                //exceptionHandling: 예외 처리 설정 정의
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
                                 .authenticationEntryPoint(new Http403ForbiddenEntryPoint())

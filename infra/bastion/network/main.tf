@@ -25,7 +25,6 @@ resource "aws_vpc" "bastion_vpc" {
 # public 서브넷은 필요가 없음
 # 대신 vpc endpoint를 사용해서 ssm을 이용한 접속을 구현해야함
 # https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-privatelink.html
-
 # private subnet
 resource "aws_subnet" "private_subnet" {
   availability_zone = "ap-northeast-2a"
