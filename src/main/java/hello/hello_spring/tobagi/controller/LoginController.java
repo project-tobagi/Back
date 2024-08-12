@@ -1,5 +1,7 @@
 package hello.hello_spring.tobagi.controller;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -9,25 +11,39 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
+    private final Dotenv dotenv;
+
+    @Autowired
+    public LoginController(Dotenv dotenv) {
+        this.dotenv = dotenv;
+    }
+
     @GetMapping("/")
-    public String home() {
-        return "index";
+    public String home(Model model) {
+        String googleClientId = dotenv.get("GOOGLE_CLIENT_ID");
+        String googleRedirectUri = dotenv.get("GOOGLE_REDIRECT_URI");
+        model.addAttribute("googleClientId", googleClientId);
+        model.addAttribute("googleRedirectUri", googleRedirectUri);
+        return "login";
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        String googleClientId = dotenv.get("GOOGLE_CLIENT_ID");
+        String googleRedirectUri = dotenv.get("GOOGLE_REDIRECT_URI");
+        model.addAttribute("googleClientId", googleClientId);
+        model.addAttribute("googleRedirectUri", googleRedirectUri);
         return "login";
     }
 
     @GetMapping("/success")
     public String success(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        model.addAttribute("user", userDetails);
-        return "redirect:https://tobagi.netlify.app/home";
+            model.addAttribute("user", userDetails);
+        return "redirect:https://tobagi-dev.netlify.app/";
     }
 
     @GetMapping("/error")
     public String handleError() {
-        // 여기서 사용자 정의 오류 페이지로 리다이렉트 또는 메시지를 처리
-        return "error"; // resources/templates/error.html 파일을 렌더링
+        return "error";
     }
 }
