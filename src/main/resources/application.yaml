@@ -7,10 +7,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+      show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
   #OAuth2
   security:
     oauth2:
@@ -20,7 +20,7 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: profile, email
-            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            redirect-uri: ${GOOGLE_REDIRECT_URI}
             authorization-grant-type: authorization_code
         provider:
           google:

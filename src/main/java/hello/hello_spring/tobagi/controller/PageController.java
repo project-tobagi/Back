@@ -9,12 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
+public class PageController {
 
     private final Dotenv dotenv;
 
     @Autowired
-    public LoginController(Dotenv dotenv) {
+    public PageController(Dotenv dotenv) {
         this.dotenv = dotenv;
     }
 

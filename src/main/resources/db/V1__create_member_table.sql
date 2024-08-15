@@ -1,0 +1,7 @@
+CREATE TABLE Member (
+    member_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    loginId VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+
+);
