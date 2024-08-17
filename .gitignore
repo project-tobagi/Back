@@ -1,6 +1,8 @@
 HELP.md
 .gradle
 .env
+.pkg
+.bat
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -42,4 +44,9 @@ out/
 *.tfstate
 *.tfstate.*
 *.tfplan
+<<<<<<< HEAD
 terraform.tfvars
+.terraform.lock.hcl
+=======
+terraform.tfvars
+>>>>>>> origin/main
