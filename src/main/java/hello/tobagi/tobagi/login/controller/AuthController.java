@@ -1,7 +1,7 @@
 package hello.tobagi.tobagi.login.controller;
 
 import hello.tobagi.tobagi.login.entity.Member;
-import hello.tobagi.tobagi.repository.MemberRepository;
+import hello.tobagi.tobagi.member.repository.MemberRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

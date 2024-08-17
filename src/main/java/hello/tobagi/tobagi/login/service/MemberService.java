@@ -3,8 +3,7 @@ package hello.tobagi.tobagi.login.service;
 import hello.tobagi.tobagi.login.dto.JoinRequest;
 import hello.tobagi.tobagi.login.dto.LoginRequest;
 import hello.tobagi.tobagi.login.entity.Member;
-import hello.tobagi.tobagi.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import hello.tobagi.tobagi.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
