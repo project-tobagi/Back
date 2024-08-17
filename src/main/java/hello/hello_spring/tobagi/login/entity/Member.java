@@ -27,8 +27,8 @@ public class Member {
     private MemberRole role;
 
     // todo
-    private String provider;
-    private String providerId;
+//    private String provider;
+//    private String providerId;
 
     public String getName() {
         return name;
@@ -50,5 +50,15 @@ public class Member {
     }
     public void setLoginId(String loginId) {
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    // Setter for password
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
 

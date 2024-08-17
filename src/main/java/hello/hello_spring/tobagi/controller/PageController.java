@@ -35,7 +35,10 @@ public class PageController {
         model.addAttribute("googleRedirectUri", googleRedirectUri);
         return "login";
     }
-
+    @GetMapping("/map")
+    public String map() {
+        return "map";
+    }
     @GetMapping("/success")
     public String success(@AuthenticationPrincipal UserDetails userDetails, Model model) {
             model.addAttribute("user", userDetails);
@@ -46,4 +49,6 @@ public class PageController {
     public String handleError() {
         return "error";
     }
+
+
 }

@@ -12,11 +12,14 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
+
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
     public boolean checkLoginIdDuplicate(String loginId){
         return memberRepository.existsByLoginId(loginId);
     }
