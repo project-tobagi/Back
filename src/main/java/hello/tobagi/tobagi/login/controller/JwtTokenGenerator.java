@@ -1,6 +1,5 @@
 package hello.tobagi.tobagi.login.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,13 +8,10 @@ import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.LoginException;
 import java.util.Date;
+
 @Component
 public class JwtTokenGenerator {
 
-//    @Value("${jwt.secret-key}")
-//    private String secretKey;
-//    @Value("${jwt.expire-length}")
-//    private long expireTimeMilliSecond;
     private final Dotenv dotenv;
     private final String secretKey;
     private final long expireTimeMilliSecond;
@@ -23,9 +19,8 @@ public class JwtTokenGenerator {
     public JwtTokenGenerator() {
         this.dotenv = Dotenv.configure().load();
         this.secretKey = dotenv.get("JWT_SECRET_KEY");
-        this.expireTimeMilliSecond = Long.parseLong(dotenv.get("JWT_EXPIRE_LENGTH"));
+        this.expireTimeMilliSecond = Long.parseLong(dotenv.get("JWT_EXPIRE_LENGTH").trim());
     }
-
 
     public String generateToken(final String id) {
         final Claims claims = Jwts.claims();

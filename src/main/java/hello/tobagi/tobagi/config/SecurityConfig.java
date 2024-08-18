@@ -16,10 +16,16 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/map/**", "/boundary/**","/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/", "/auth/google/callback", "/auth/**", "/login", "/error","/boundary/**").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
+//                                .requestMatchers("/map/**", "/boundary/**","/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/", "/auth/google/callback", "/auth/**", "/login", "/error","/boundary/**").permitAll()
+//                                .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable())
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .failureUrl("/login?error=true")
+                );
         return http.build();
     }
 }

@@ -8,10 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Member {
 
     @Id
@@ -26,9 +26,6 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
-    // todo
-//    private String provider;
-//    private String providerId;
 
     public String getName() {
         return name;
@@ -40,7 +37,6 @@ public class Member {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -48,14 +44,11 @@ public class Member {
     public String getLoginId() {
         return loginId;
     }
-    public void setLoginId(String loginId) {
-    }
+    public void setLoginId(String loginId) {this.loginId = loginId;}
 
     public String getPassword() {
         return password;
     }
-
-    // Setter for password
     public void setPassword(String password) {
         this.password = password;
     }
