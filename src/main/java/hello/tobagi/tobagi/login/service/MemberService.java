@@ -1,6 +1,6 @@
 package hello.tobagi.tobagi.login.service;
 
-import hello.tobagi.tobagi.login.dto.JoinRequest;
+//import hello.tobagi.tobagi.login.dto.JoinRequest;
 import hello.tobagi.tobagi.login.dto.LoginRequest;
 import hello.tobagi.tobagi.login.entity.Member;
 import hello.tobagi.tobagi.member.repository.MemberRepository;
@@ -24,9 +24,9 @@ public class MemberService {
     }
 
 
-    public void join(JoinRequest joinRequest) {
-        memberRepository.save(joinRequest.toEntity());
-    }
+//    public void join(JoinRequest joinRequest) {
+//        memberRepository.save(joinRequest.toEntity());
+//    }
 
     public Member login(LoginRequest loginRequest) {
         Member findMember = memberRepository.findByLoginId(loginRequest.getLoginId());

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Get Boundary</title>
+</head>
+<body>
+<h1>Get Boundary Coordinates</h1>
+<form action="/getBoundary" method="get">
+  <label for="name">District Name:</label>
+  <input type="text" id="name" name="name" required>
+  <button type="submit">Get Boundary</button>
+</form>
+<div>
+  <h2>Boundary Coordinates:</h2>
+  <p th:text="${boundaryCoordinates}"></p>
+</div>
+</body>
+</html>

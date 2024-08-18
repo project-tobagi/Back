@@ -1,44 +1,72 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Google Login Demo</title>-->
+<!--    <link rel="icon" href="/favicon.ico">-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Google Login Demo</h2>-->
+<!--<button id="loginBtn">Login with Google</button>-->
+
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    const googleAuthUrl = () => {-->
+<!--        const clientId = /*[[${googleClientId}]]*/ 'default_client_id';-->
+<!--        const redirectUri = /*[[${googleRedirectUri}]]*/ 'default_redirect_uri';-->
+<!--        const scope = 'profile';-->
+<!--        const responseType = 'code'; // 'code'도 가능-->
+
+<!--        return `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${encodeURIComponent(scope)}`;-->
+<!--    };-->
+
+<!--    document.getElementById('loginBtn').addEventListener('click', () => {-->
+<!--        window.location.href = googleAuthUrl();  // 사용자를 Google 인증 페이지로 리다이렉트-->
+<!--    });-->
+<!--    /*]]>*/-->
+
+<!--        // This function should be called after receiving the access token from Google-->
+<!--    const handleGoogleLoginResponse = (response) => {-->
+<!--        const accessToken = response.access_token;-->
+<!--        sendAccessTokenToBackend(accessToken);-->
+<!--    };-->
+
+<!--    // Example of how to handle the response from Google (this part depends on your actual implementation)-->
+<!--    // window.addEventListener('message', (event) => {-->
+<!--    //     if (event.origin === 'https://accounts.google.com') {-->
+<!--    //         handleGoogleLoginResponse(event.data);-->
+<!--    //     }-->
+<!--    // });-->
+<!--    /*]]>*/-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Login Demo</title>
-    <link rel="icon" href="/favicon.ico">
+    <title>Login</title>
 </head>
 <body>
-<h2>Google Login Demo</h2>
-<button id="loginBtn">Login with Google</button>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    const googleAuthUrl = () => {
-        const clientId = /*[[${googleClientId}]]*/ 'default_client_id';
-        const redirectUri = /*[[${googleRedirectUri}]]*/ 'default_redirect_uri';
-        const scope = 'profile';
-        const responseType = 'code'; // 'code'도 가능
-
-        return `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${encodeURIComponent(scope)}`;
-    };
-
-    document.getElementById('loginBtn').addEventListener('click', () => {
-        window.location.href = googleAuthUrl();  // 사용자를 Google 인증 페이지로 리다이렉트
-    });
-    /*]]>*/
-
-        // This function should be called after receiving the access token from Google
-    const handleGoogleLoginResponse = (response) => {
-        const accessToken = response.access_token;
-        sendAccessTokenToBackend(accessToken);
-    };
-
-    // Example of how to handle the response from Google (this part depends on your actual implementation)
-    // window.addEventListener('message', (event) => {
-    //     if (event.origin === 'https://accounts.google.com') {
-    //         handleGoogleLoginResponse(event.data);
-    //     }
-    // });
-    /*]]>*/
-</script>
+<h1>Login</h1>
+<div>
+    <a href="/oauth2/authorization/google">
+        <button>Login with Google</button>
+    </a>
+</div>
+<div>
+    <a href="/oauth2/authorization/naver">
+        <button>Login with Naver</button>
+    </a>
+</div>
+<div>
+    <a href="/oauth2/authorization/kakao">
+        <button>Login with Kakao</button>
+    </a>
+</div>
 </body>
 </html>
