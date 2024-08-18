@@ -1,4 +1,4 @@
-package hello.tobagi.tobagi.repository;
+package hello.tobagi.tobagi.member.repository;
 
 import hello.tobagi.tobagi.login.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

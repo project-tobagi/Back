@@ -44,9 +44,6 @@ out/
 *.tfstate
 *.tfstate.*
 *.tfplan
-<<<<<<< HEAD
 terraform.tfvars
 .terraform.lock.hcl
-=======
-terraform.tfvars
->>>>>>> origin/main
+
