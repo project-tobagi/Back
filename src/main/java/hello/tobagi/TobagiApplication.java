@@ -2,8 +2,9 @@ package hello.tobagi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.example.storage", "hello.tobagi.tobagi"})
 public class TobagiApplication {
 
 	public static void main(String[] args) {

@@ -1,7 +1,9 @@
 package hello.tobagi.tobagi.login.controller;
 
 import hello.tobagi.tobagi.login.entity.Member;
-import hello.tobagi.tobagi.member.repository.MemberRepository;
+import com.example.storage.MemberJpaRepository;
+import hello.tobagi.tobagi.login.entity.MemberRole.MemberRole;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,25 +19,21 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final Dotenv dotenv;
-    private final MemberRepository memberRepository;
+    private final com.example.storage.MemberJpaRepository memberRepository;
     private final RestTemplate restTemplate;
     private final JwtTokenGenerator jwtTokenGenerator;
 
     @Autowired
-    public AuthController(Dotenv dotenv, MemberRepository memberRepository, JwtTokenGenerator jwtTokenGenerator) {
+    public AuthController(Dotenv dotenv, MemberJpaRepository memberRepository, JwtTokenGenerator jwtTokenGenerator) {
         this.dotenv = dotenv;
         this.memberRepository = memberRepository;
         this.restTemplate = new RestTemplate();
@@ -208,20 +206,20 @@ public class AuthController {
     }
 
     private Member createOrUpdateMember(String loginId, String name,String email) {
-        Optional<Member> existingMember = Optional.ofNullable(memberRepository.findByLoginId(loginId));
-        Member member;
-        if (existingMember.isPresent()) {
-            member = existingMember.get();
-            member.setName(name);
-            member.setEmail(email);
-        } else {
-            member = new Member();
-            member.setLoginId(loginId);
-            member.setName(name);
-            member.setEmail(email);
-        }
-
+        Member build = Member.builder()
+                .loginId(loginId)
+                .name(name)
+                .email(email)
+                .role(MemberRole.USER)
+                .build();
+        com.example.storage.Member member = com.example.storage.Member.builder()
+                .loginId(build.getLoginId())
+                .password(build.getPassword())
+                .name(build.getName())
+                .email(build.getEmail())
+                .role(com.example.storage.MemberRole.MemberRole.USER)
+                .build();
         memberRepository.save(member);
-        return member;
+        return build;
     }
 }
