@@ -1,0 +1,20 @@
+-- -- Install dblink extension
+-- CREATE EXTENSION IF NOT EXISTS dblink;
+--
+-- -- Configure replication
+-- ALTER SYSTEM SET hot_standby = 'on';
+--
+-- -- Set up the replication slot only if it does not already exist
+-- DO $$
+-- BEGIN
+-- BEGIN
+--         PERFORM dblink_exec(
+--             'host=postgres-master user=repluser password=replpassword dbname=replication_test',
+--             'SELECT pg_create_physical_replication_slot(''replica_slot'')'
+--         );
+-- EXCEPTION
+--         WHEN duplicate_object THEN
+--             -- Ignore duplicate_object error, which occurs when the slot already exists
+--             RAISE NOTICE 'Replication slot already exists, skipping creation.';
+-- END;
+-- END $$;
