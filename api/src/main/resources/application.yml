@@ -11,7 +11,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-    #OAuth2
   security:
     oauth2:
       client:
@@ -57,8 +56,14 @@ spring:
       path: /v3/api-docs      # OpenAPI 명세서를 제공할 경로
 logging:
   level:
+<<<<<<<< HEAD:api/src/main/resources/application.yml
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+========
+    org:
+      springframework:
+        security: DEBUG
+>>>>>>>> main:src/main/resources/application.yml
 #api:
 #  crime:
 #    url: https://api.odcloud.kr/api/3074462/v1/uddi:efafd73f-3310-48f8-9f56-bddc1c51f3ba_201910221541?serviceKey=5IiT10w5sPxfnjD0lHu9Zf5Fe%2Fkc64s6mKIH9G%2FPKKBOlK47wIOrlHX3bM6xCQFTHGwjkZw5uC1eDyPRrF5Wcg%3D%3D&page=1&perPage=10
