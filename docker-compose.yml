@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./app  # 만약 어플리케이션에 Dockerfile이 있다면
+    container_name: my-app
+    environment:
+      - DB_HOST=${DB_HOST}              # Aurora RDS 엔드포인트
+      - DB_PORT=3306
+      - DB_DATABASE=replication_test
+      - DB_USERNAME=admin
+      - DB_PASSWORD=password
+    ports:
+      - "8080:8080"
+    networks:
+      - custom_network
+
+networks:
+  custom_network:
+    driver: bridge

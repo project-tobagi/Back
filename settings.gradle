@@ -1,2 +1,4 @@
 rootProject.name = 'project-tobagi'
-
+include(':storage')
+include(':api')
+//include(':common')
